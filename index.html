@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090f1c">
+  <meta name="description" content="Automatic Toilet Door System — live monitoring and demonstration dashboard.">
+  <title>AutoDoor | Smart Facility Control</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="AutoDoor home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span><strong>AutoDoor</strong><small>SMART FACILITY</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview" aria-current="page"><span class="nav-icon">▦</span> Overview</a>
+        <a class="nav-link" href="#controls"><span class="nav-icon">⌘</span> Door controls</a>
+        <a class="nav-link" href="#activity"><span class="nav-icon">◷</span> Activity log</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>System demo</strong>
+          <p>Use the controls to demonstrate the automatic door workflow.</p>
+        </div>
+        <div class="profile-row">
+          <div class="avatar">AD</div>
+          <div><strong>Administrator</strong><small>Demo dashboard</small></div>
+          <span class="profile-dots">•••</span>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-menu" id="menuBtn" aria-label="Toggle navigation" aria-controls="sidebar" aria-expanded="false">☰</button>
+          <div><div class="eyebrow">FACILITY MANAGEMENT / OVERVIEW</div><h1>System overview</h1></div>
+        </div>
+        <div class="top-actions">
+          <div class="live-pill"><span class="pulse-dot" id="connectionDot"></span><span id="connectionText">Connecting</span></div>
+          <div class="date-chip" id="dateText">--</div>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div><p class="welcome-kicker">AUTOMATIC TOILET DOOR SYSTEM</p><h2>Good day. <span>Your facility at a glance.</span></h2><p class="muted">Monitor occupancy, simulate payment, and control the door from one place.</p></div>
+        <div class="system-tag"><span class="tag-icon">✧</span><span><b>ESP8266 NODEMCU</b><small>Connected through Blynk</small></span></div>
+      </section>
+
+      <section class="metric-grid" aria-label="System metrics">
+        <article class="metric-card"><div class="metric-top"><span>DEVICE CONNECTION</span><span class="metric-icon cyan">⌁</span></div><div class="metric-value" id="deviceMetric">Checking</div><div class="metric-foot"><span class="tiny-dot" id="deviceDot"></span><span id="deviceFoot">Waiting for device</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>DOOR STATUS</span><span class="metric-icon violet">↔</span></div><div class="metric-value" id="doorMetric">Unknown</div><div class="metric-foot"><span class="tiny-dot violet-dot"></span><span id="doorFoot">Awaiting update</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>ROOM OCCUPANCY</span><span class="metric-icon amber">◎</span></div><div class="metric-value" id="occupancyMetric">Unknown</div><div class="metric-foot"><span class="tiny-dot amber-dot"></span><span id="occupancyFoot">IR sensor status</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>SESSION TIMER</span><span class="metric-icon green">◷</span></div><div class="metric-value timer-value" id="timerMetric">10:00</div><div class="metric-foot"><span class="tiny-dot green-dot"></span><span id="timerFoot">Ready for a session</span></div></article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel control-panel" id="controls">
+          <div class="panel-heading"><div><div class="eyebrow">CONTROL CENTER</div><h3>Door operation</h3></div><span class="panel-status"><span class="pulse-dot"></span> LIVE PANEL</span></div>
+          <div class="door-visual">
+            <div class="door-orbit orbit-one"></div><div class="door-orbit orbit-two"></div>
+            <div class="door-symbol"><div class="door-frame"><div class="door-leaf"><span class="door-handle"></span></div></div><span class="door-floor"></span></div>
+            <div class="door-caption"><strong id="doorVisualStatus">Awaiting device</strong><small id="doorVisualSub">Door state will appear here</small></div>
+          </div>
+          <div class="control-actions">
+            <button class="action-btn open-btn" id="openBtn"><span>↗</span><b>Open door</b><small>Start a 10-minute session</small></button>
+            <button class="action-btn close-btn" id="closeBtn"><span>↙</span><b>Close door</b><small>Close when area is clear</small></button>
+          </div>
+          <p class="safety-note"><span>ⓘ</span> Closing is subject to the local IR safety check on the ESP8266.</p>
+        </article>
+
+        <article class="panel payment-panel">
+          <div class="panel-heading"><div><div class="eyebrow">DEMO TRANSACTION</div><h3>Simulated payment</h3></div><span class="payment-icon">₣</span></div>
+          <div class="payment-amount"><small>DEMO ACCESS FEE</small><div>RWF <strong>500</strong></div></div>
+          <p class="muted small-copy">Simulate a successful coin payment for your project demonstration. This does not process real money.</p>
+          <button class="primary-btn" id="paymentBtn"><span>＋</span> Simulate payment</button>
+          <div class="payment-result" id="paymentResult"><span class="result-indicator"></span><span>Waiting for a demo transaction</span></div>
+          <div class="payment-foot"><span>PAYMENT INPUT</span><b>DEMO MODE</b></div>
+        </article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="panel session-panel">
+          <div class="panel-heading"><div><div class="eyebrow">ACCESS SESSION</div><h3>Session countdown</h3></div><span class="session-badge" id="sessionBadge">STANDBY</span></div>
+          <div class="countdown-wrap"><div class="countdown-ring" id="countdownRing"><div class="countdown-inner"><strong id="countdown">10:00</strong><small>TIME REMAINING</small></div></div><div class="session-info"><strong id="sessionTitle">No active session</strong><p id="sessionDescription">A session starts when the Open Door command is accepted.</p><div class="progress-track"><span id="timerProgress"></span></div><small id="progressLabel">0% completed</small></div></div>
+        </article>
+        <article class="panel activity-panel" id="activity">
+          <div class="panel-heading"><div><div class="eyebrow">SYSTEM HISTORY</div><h3>Recent activity</h3></div><button class="text-btn" id="clearLogBtn">Clear log</button></div>
+          <div class="activity-list" id="activityList"><div class="empty-state"><span>◷</span><p>No activity yet</p><small>System events will appear here.</small></div></div>
+        </article>
+      </section>
+      <footer class="footer"><span>© 2026 AutoDoor Control Interface</span><span><i></i> Secure connection via Cloudflare Worker</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
